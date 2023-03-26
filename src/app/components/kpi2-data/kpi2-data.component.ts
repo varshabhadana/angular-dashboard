@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'data-comparision',
-  templateUrl: './data-comparision.component.html',
-  styleUrls: ['./data-comparision.component.css'],
+  selector: 'app-kpi2-data',
+  templateUrl: './kpi2-data.component.html',
+  styleUrls: ['./kpi2-data.component.css'],
 })
-export class DataComparisionComponent {
+export class Kpi2DataComponent {
   token = localStorage.getItem('token');
-  data = [];
+  data = {};
   async fetchKpi2Data() {
     const comparisionData = await fetch(
       'https://fe-test-api-gateway.circly.info/api/v1/customers/data/kpi2',
@@ -20,7 +20,7 @@ export class DataComparisionComponent {
       }
     );
     this.data = await comparisionData.json();
-    console.log(this.data);
+    console.log('kpi2', this.data);
   }
   ngOnInit() {
     this.fetchKpi2Data();

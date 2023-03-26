@@ -33,7 +33,7 @@ export class LoginComponent {
 
     if (loginResponse.status === 200) {
       this.show = true;
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
       localStorage.setItem('token', responseData.jwt);
     }
     /* this.userService.login(data); */
