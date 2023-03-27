@@ -1,20 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  email: string = '';
-  password: string = '';
+export class LoginComponent implements OnInit {
+  /*  email: string = '';
+  password: string = ''; */
+  loginForm!: FormGroup;
   show: boolean = false;
+  emailError: boolean = false;
+  passwordError: boolean = false;
+  loginInvalid: boolean = false;
+  constructor(
+    private fb: FormBuilder,
 
-  constructor(private userService: UserService, private router: Router) {}
+    private router: Router
+  ) {}
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
 
-  async userLogin(data: any) {
+  async userLogin() {
+    this.loginInvalid = false;
+    this.emailError = false;
+    this.passwordError = false;
+    const { email, password } = this.loginForm.value;
+    if (!email) {
+      this.emailError = true;
+      return;
+    }
+    if (!password) {
+      this.passwordError = true;
+      return;
+    }
+
     const loginResponse = await fetch(
       'https://fe-test-api-gateway.circly.info/api/v1/auth/login',
       {
@@ -23,19 +49,22 @@ export class LoginComponent {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          email: data.email,
-          password: data.password,
+          email,
+          password,
         }),
       }
     );
     const responseData = await loginResponse.json();
     console.log(responseData.jwt);
-
+    console.log(responseData.status);
     if (loginResponse.status === 200) {
       this.show = true;
       this.router.navigate(['/']);
       localStorage.setItem('token', responseData.jwt);
     }
-    /* this.userService.login(data); */
+
+    if (loginResponse.status !== 200) {
+      this.loginInvalid = true;
+    }
   }
 }

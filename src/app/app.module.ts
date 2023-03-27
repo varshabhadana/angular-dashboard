@@ -1,15 +1,15 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { Kpi1DataComponent } from './components/kpi1-data/kpi1-data.component';
 import { Kpi2DataComponent } from './components/kpi2-data/kpi2-data.component';
 import { Kpi3DataComponent } from './components/kpi3-data/kpi3-data.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
-import { Kpi1DataComponent } from './components/kpi1-data/kpi1-data.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,12 @@ import { Kpi1DataComponent } from './components/kpi1-data/kpi1-data.component';
     Kpi2DataComponent,
     Kpi1DataComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
