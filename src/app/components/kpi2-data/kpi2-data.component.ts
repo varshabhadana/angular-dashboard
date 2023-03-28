@@ -71,7 +71,7 @@ export class Kpi2DataComponent {
         labels: ['2019', '2020', '2021', '2022', '2023'],
         datasets: [
           {
-            label: 'Year 2022-2023', // Name the series
+            label: 'Year 2019-2022', // Name the series
             data: totalDataSecondSeries.map((el: any) => el.total), // Specify the data values array
             fill: false,
             borderColor: '#2196f3', // Add custom color border (Line)
@@ -79,7 +79,7 @@ export class Kpi2DataComponent {
             borderWidth: 1, // Specify bar border width
           },
           {
-            label: 'Year 2022-2019', // Name the series
+            label: 'Year 2022-2013', // Name the series
             data: totalDataFirstSeriesWithPreviousYears.map(
               (el: any) => el.total
             ), // Specify the data values array

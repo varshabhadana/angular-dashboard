@@ -41,6 +41,8 @@ export class Kpi1DataComponent {
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,

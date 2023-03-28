@@ -15,11 +15,13 @@ export class LoginComponent implements OnInit {
   emailError: boolean = false;
   passwordError: boolean = false;
   loginInvalid: boolean = false;
+
   constructor(
     private fb: FormBuilder,
 
     private router: Router
   ) {}
+
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -55,8 +57,7 @@ export class LoginComponent implements OnInit {
       }
     );
     const responseData = await loginResponse.json();
-    console.log(responseData.jwt);
-    console.log(responseData.status);
+
     if (loginResponse.status === 200) {
       this.show = true;
       this.router.navigate(['/']);

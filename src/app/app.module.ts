@@ -10,6 +10,7 @@ import { Kpi2DataComponent } from './components/kpi2-data/kpi2-data.component';
 import { Kpi3DataComponent } from './components/kpi3-data/kpi3-data.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeComponent } from './pages/home/home.component';
     Kpi3DataComponent,
     Kpi2DataComponent,
     Kpi1DataComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

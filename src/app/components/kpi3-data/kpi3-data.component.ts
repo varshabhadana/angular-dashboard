@@ -34,6 +34,7 @@ export class Kpi3DataComponent {
 
     this.chart = new Chart('Chart3', {
       type: 'line',
+
       data: {
         labels: totalData.map((el: any) => el.month),
         datasets: [
@@ -45,6 +46,9 @@ export class Kpi3DataComponent {
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
         scales: {
           y: {
             beginAtZero: true,
