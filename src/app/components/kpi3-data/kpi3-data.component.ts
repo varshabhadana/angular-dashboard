@@ -28,7 +28,6 @@ export class Kpi3DataComponent {
       }
     ).finally(() => (this.loading = false));
     this.data = await comparisionData.json();
-    console.log('kpi3', this.data);
 
     const totalData = extractKpiData(this.data);
 

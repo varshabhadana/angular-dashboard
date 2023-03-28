@@ -1,6 +1,12 @@
-<div class="flex flex-col gap-5 p-5 h-screen w-screen">
+<div class="h-screen w-[800px] overscroll-x-none">
   <app-header></app-header>
-  <app-kpi1-data></app-kpi1-data>
-  <app-kpi2-data></app-kpi2-data>
-  <app-kpi3-data></app-kpi3-data>
+  <div class="flex flex-row">
+    <div><app-sidebar></app-sidebar></div>
+    <div class="flex flex-col gap-5 mt-4 p-4">
+      <app-kpi1-data></app-kpi1-data>
+      <app-kpi2-data></app-kpi2-data>
+      <app-kpi3-data></app-kpi3-data>
+    </div>
+  </div>
+  <app-footer></app-footer>
 </div>

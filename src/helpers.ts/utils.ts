@@ -45,3 +45,23 @@ export function extractKpiData(data: { predictions: any[]; sum: number }) {
 
   return totalDataBothYear;
 }
+
+export async function getKpiData(kpiname: string) {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await fetch(
+      `https://fe-test-api-gateway.circly.info/api/v1/customers/data/kpi${kpiname}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -11,6 +11,8 @@ import { Kpi3DataComponent } from './components/kpi3-data/kpi3-data.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     Kpi2DataComponent,
     Kpi1DataComponent,
     LogoutComponent,
+    SidebarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

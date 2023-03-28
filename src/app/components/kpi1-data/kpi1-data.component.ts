@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import * as _ from 'lodash';
-import { extractKpiData } from 'src/helpers.ts/utils';
+import { extractKpiData, getKpiData } from 'src/helpers.ts/utils';
 
 @Component({
   selector: 'app-kpi1-data',
@@ -15,17 +15,9 @@ export class Kpi1DataComponent {
   chart: any;
 
   async fetchKpi1Data() {
-    const turnoverPrediction = await fetch(
-      'https://fe-test-api-gateway.circly.info/api/v1/customers/data/kpi1',
-      {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
-    );
-    this.data = await turnoverPrediction.json();
+    const turnoverPrediction = await getKpiData('1');
+    this.data = turnoverPrediction;
+
     const totalData = extractKpiData(this.data);
 
     this.chart = new Chart('myChart', {

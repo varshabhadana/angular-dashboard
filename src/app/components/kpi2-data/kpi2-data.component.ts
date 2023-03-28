@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import * as _ from 'lodash';
+import { getKpiData } from 'src/helpers.ts/utils';
 
 @Component({
   selector: 'app-kpi2-data',
@@ -8,21 +9,11 @@ import * as _ from 'lodash';
   styleUrls: ['./kpi2-data.component.css'],
 })
 export class Kpi2DataComponent {
-  token = localStorage.getItem('token');
   data: any;
   chart: any;
   async fetchKpi2Data() {
-    const comparisionData = await fetch(
-      'https://fe-test-api-gateway.circly.info/api/v1/customers/data/kpi2',
-      {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
-    );
-    this.data = await comparisionData.json();
+    const comparisionData = await getKpiData('2');
+    this.data = comparisionData;
 
     const firstSeriesData = this.data[0];
     const firstSeriesGroupedYearData = _.groupBy(
@@ -55,44 +46,48 @@ export class Kpi2DataComponent {
       );
       return { year: el, total };
     });
+    let yearNames = [
+      ...new Set([...firstSeriesKeys, ...secondSeriesKeys]),
+    ].sort();
 
-    const totalDataFirstSeriesWithPreviousYears = [
-      { year: '2019', total: NaN },
-      { year: '2020', total: NaN },
-      { year: '2021', total: NaN },
-      ...totalDataFirstSeries,
-    ];
-
-    /* const combinedArray = [...totalDataSecondSeries, ...totalDataFirstSeries]; */
+    const totalDataFirstSeriesWithPreviousYears = yearNames.map((year) =>
+      totalDataFirstSeries.some((el) => el.year === year)
+        ? totalDataFirstSeries.find((el) => el.year === year)
+        : { year, total: NaN }
+    );
 
     this.chart = new Chart('Chart2', {
       type: 'line',
       data: {
-        labels: ['2019', '2020', '2021', '2022', '2023'],
+        labels: yearNames,
         datasets: [
           {
-            label: 'Year 2019-2022', // Name the series
-            data: totalDataSecondSeries.map((el: any) => el.total), // Specify the data values array
-            fill: false,
-            borderColor: '#2196f3', // Add custom color border (Line)
-            backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-            borderWidth: 1, // Specify bar border width
-          },
-          {
-            label: 'Year 2022-2013', // Name the series
+            label: `Year ${totalDataFirstSeries[0].year}- ${
+              totalDataFirstSeries[totalDataFirstSeries.length - 1].year
+            }`,
             data: totalDataFirstSeriesWithPreviousYears.map(
               (el: any) => el.total
-            ), // Specify the data values array
+            ),
             fill: false,
-            borderColor: '#4CAF50', // Add custom color border (Line)
-            backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
-            borderWidth: 1, // Specify bar border width
+            borderColor: '#2196f3',
+            backgroundColor: '#2196f3',
+            borderWidth: 1,
+          },
+          {
+            label: `Year ${totalDataSecondSeries[0].year}- ${
+              totalDataSecondSeries[totalDataSecondSeries.length - 1].year
+            }`,
+            data: totalDataSecondSeries.map((el: any) => el.total),
+            fill: false,
+            borderColor: '#4CAF50',
+            backgroundColor: '#4CAF50',
+            borderWidth: 1,
           },
         ],
       },
       options: {
-        responsive: true, // Instruct chart js to respond nicely.
-        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+        responsive: true,
+        maintainAspectRatio: false,
       },
     });
   }

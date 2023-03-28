@@ -1,15 +1,15 @@
 <div>
   <div
     *ngIf="!loading"
-    class="w-[1207px] h-[320px] bg-white sm:rounded-lg shadow-xl p-9 mr-5 flex flex-col"
+    class="h-[320px] bg-white sm:rounded-lg shadow-xl p-9 flex flex-col"
   >
-    <div>KPI 3 Data</div>
+    <div class="text-lg font-semibold">KPI 3</div>
     <canvas id="Chart3"></canvas>
   </div>
-  <div *ngIf="loading" class="w-[1207px] h-[320px] bg-red-500">
+  <div *ngIf="loading" class="w-[1207px] h-[200px]">
     <div
       role="status"
-      class="max-w-md p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+      class="max-w-md p-1 space-y-0 divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6"
     >
       <div
         class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2.5"
