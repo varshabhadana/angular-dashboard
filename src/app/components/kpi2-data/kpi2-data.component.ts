@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import * as _ from 'lodash';
-import { extractKpiData } from 'src/helpers.ts/utils';
 
 @Component({
   selector: 'app-kpi2-data',
@@ -24,35 +23,56 @@ export class Kpi2DataComponent {
       }
     );
     this.data = await comparisionData.json();
-    console.log('kpi2', this.data);
 
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+    const firstSeriesData = this.data[0];
+    const firstSeriesGroupedYearData = _.groupBy(
+      firstSeriesData.predictions,
+      ({ date }) => new Date(date).getFullYear()
+    );
+    const firstSeriesKeys = Object.keys(firstSeriesGroupedYearData);
+
+    const totalDataFirstSeries = firstSeriesKeys.map((el) => {
+      const total = firstSeriesGroupedYearData[el].reduce(
+        (sum: number, item: { prediction: number; date: string }) =>
+          sum + item.prediction,
+        0
+      );
+      return { year: el, total };
+    });
+
+    const secondSeriesData = this.data[1];
+    const secondSeriesGroupedYearData = _.groupBy(
+      secondSeriesData.predictions,
+      ({ date }) => new Date(date).getFullYear()
+    );
+    const secondSeriesKeys = Object.keys(secondSeriesGroupedYearData);
+
+    const totalDataSecondSeries = secondSeriesKeys.map((el) => {
+      const total = secondSeriesGroupedYearData[el].reduce(
+        (sum: number, item: { prediction: number; date: string }) =>
+          sum + item.prediction,
+        0
+      );
+      return { year: el, total };
+    });
+
+    const totalDataFirstSeriesWithPreviousYears = [
+      { year: '2019', total: NaN },
+      { year: '2020', total: NaN },
+      { year: '2021', total: NaN },
+      ...totalDataFirstSeries,
     ];
 
-    const firstSeries = extractKpiData(this.data[0]);
-
-    const secondSeries = extractKpiData(this.data[1]);
+    /* const combinedArray = [...totalDataSecondSeries, ...totalDataFirstSeries]; */
 
     this.chart = new Chart('Chart2', {
       type: 'line',
       data: {
-        labels: firstSeries.map((el: any) => el.month),
+        labels: ['2019', '2020', '2021', '2022', '2023'],
         datasets: [
           {
             label: 'Year 2022-2023', // Name the series
-            data: firstSeries.map((el: any) => el.total), // Specify the data values array
+            data: totalDataSecondSeries.map((el: any) => el.total), // Specify the data values array
             fill: false,
             borderColor: '#2196f3', // Add custom color border (Line)
             backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
@@ -60,7 +80,9 @@ export class Kpi2DataComponent {
           },
           {
             label: 'Year 2022-2019', // Name the series
-            data: secondSeries.map((el: any) => el.total), // Specify the data values array
+            data: totalDataFirstSeriesWithPreviousYears.map(
+              (el: any) => el.total
+            ), // Specify the data values array
             fill: false,
             borderColor: '#4CAF50', // Add custom color border (Line)
             backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
