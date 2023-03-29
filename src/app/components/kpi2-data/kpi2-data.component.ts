@@ -62,7 +62,7 @@ export class Kpi2DataComponent {
         labels: yearNames,
         datasets: [
           {
-            label: `Year ${totalDataFirstSeries[0].year}- ${
+            label: `Year ${totalDataFirstSeries[0].year} - ${
               totalDataFirstSeries[totalDataFirstSeries.length - 1].year
             }`,
             data: totalDataFirstSeriesWithPreviousYears.map(
@@ -74,7 +74,7 @@ export class Kpi2DataComponent {
             borderWidth: 1,
           },
           {
-            label: `Year ${totalDataSecondSeries[0].year}- ${
+            label: `Year ${totalDataSecondSeries[0].year} - ${
               totalDataSecondSeries[totalDataSecondSeries.length - 1].year
             }`,
             data: totalDataSecondSeries.map((el: any) => el.total),

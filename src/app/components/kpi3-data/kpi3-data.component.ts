@@ -38,7 +38,7 @@ export class Kpi3DataComponent {
         labels: totalData.map((el: any) => el.month),
         datasets: [
           {
-            label: 'Turnover prediction for 2023-2024',
+            label: 'Prediction for Year 2023-2024',
             data: totalData.map((el: any) => el.total),
             borderWidth: 1,
           },
